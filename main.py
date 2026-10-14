@@ -1,7 +1,6 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-import nest_asyncio
 import asyncio
 from flask import Flask
 from threading import Thread
@@ -19,11 +18,8 @@ def keep_alive():
     t = Thread(target=run)
     t.start()
 
-# حل مشكلة التعارض داخل البيئة السحابية
-nest_asyncio.apply()
-
-# 🔑 1. ضع هنا التوكن الخاص ببوتك (تأكد إنه بين علامات التنصيص)
-BOT_TOKEN = "MTU1OTkyNjgzNTIyMjAyNDMwNA.GwJI0n._jv9ZIVCrsaiLI2Z5Z25Aj_vg_Nv6UJ92CCLFc"
+# 🔑 1. ضع هنا التوكن الجديد الخاص ببوتك (تأكد إنه بين علامات التنصيص)
+BOT_TOKEN = "MTU1OTkyNjgzNTIyMjAyNDMwNA.Gxzj1_.7zbXdcZYDUftviX2dzWz71zD1Z9QQj_uxS0Fhk"
 
 # 🆔 2. ضع هنا الآيدي الخاص بحسابك الشخصي في الديسكورد
 YOUR_DISCORD_ID = 1559545442340053094  
@@ -66,21 +62,17 @@ async def send_to_any_channel(
     message: str, 
     file: discord.Attachment = None
 ):
-    # 🔒 الحماية بالآيدي الشخصي
     if interaction.user.id != YOUR_DISCORD_ID:
         await interaction.response.send_message("❌ عذراً، هذا الأمر حصري لمالك السيرفر فقط!", ephemeral=True)
         return
 
-    # 🔒 الحماية بآيدي الروم
     if interaction.channel_id != ALLOWED_CHANNEL_ID:
         await interaction.response.send_message("❌ خطأ: مسموح باستخدام الأمر فقط في روم التحكم الخاص!", ephemeral=True)
         return
 
-    # إعلام الديسكورد بالانتظار لمعالجة رفع الملفات
     await interaction.response.defer(ephemeral=True)
 
     try:
-        # التنسيق الضخم والفخم مع الخطوط الناعمة
         formatted_message = (
             f"👑 ┃ **مـرسـول مـن الإدارة**\n"
             f"• ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ •\n\n"
@@ -88,7 +80,6 @@ async def send_to_any_channel(
             f"• ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬ •"
         )
         
-        # صنع المربع المدمج الأنيق المتناسق مع الشاشة المظلمة
         embed = discord.Embed(
             description=formatted_message,
             color=discord.Color.from_rgb(47, 49, 54)
